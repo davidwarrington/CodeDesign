@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>David Warrington | Code Design</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- JS -->
+  <script type="text/javascript" src="assets/js/scripts.js"></script>
+</head>
+<body>
+  <canvas id="canvas" class="black-border canvas-bg" width="480"></canvas>
+  <!-- <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    var x = canvas.width;
+    var y = canvas.height;
+
+    var planetGradient = ctx.createRadialGradient(x / 2, y / 2, 10, x / 2, y / 2, 500);
+    planetGradient.addColorStop(1, 'red');
+    planetGradient.addColorStop(0, 'blue');
+
+    ctx.fillStyle = planetGradient;
+    ctx.fillRect(0, 0, 480, 360);
+
+  </script> -->
+
+  <!-- <canvas id="testCanvas" class="black-border" width="960" height="360"></canvas>
+  <script>
+    var testCanvas = document.getElementById('testCanvas');
+    var testCtx = testCanvas.getContext('2d');
+
+    function drawTestCanvas() {
+      var testX = testCanvas.width;
+      var testY = testCanvas.height;
+
+      testCtx.beginPath();
+      testCtx.moveTo(0, testY / 2);
+      for (var i = 0; i <=testX; i++) {
+        // y = a * cos(bx) + c
+        // a = amplitude
+        // b = frequency
+        // c = moves along y axis in negative direction
+        // var d = ((Math.cos(i / 200) * (testY / 2)) + (testY * 2)) / 2.5;
+        var d = ((testY / 2) * Math.cos(i / (testX / 12))) + (testY / 2);
+        testCtx.lineTo(i + 80, d);
+      }
+      testCtx.stroke();
+    }
+
+    drawTestCanvas();
+    </script> -->
+</body>
+</html>
