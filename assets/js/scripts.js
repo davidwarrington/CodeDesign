@@ -1,16 +1,17 @@
 window.onload = function () {
-  // console.log('hello');
 
-  var canvas = document.getElementById('canvas');
+  var canvas = document.getElementById('staticCanvas');
   var ctx = canvas.getContext('2d');
 
-  canvas.height = canvas.width * 0.75; // This keeps the ratio of width to height at the necessary
+  canvas.height = canvas.width * 0.75; // This keeps the ratio of width to height at the appropriate ratio for drawing the image
 
   var x = canvas.width;
   var y = canvas.height;
 
+  ctx.fillRect(0, 0, x, y); // This gives the canvas a background colour of black because no fill colour has previously been given
+
   // Hexagon Colours -------------------------------------------------------------------
-  var transparent = 'rgba(0, 0, 0, 0)'; // This is for use later on by some functions
+  var transparent = 'rgba(0, 0, 0, 0)'; // These are for use later on by some functions
   var black = 'rgba(0, 0, 0, 1)';
   var frameYellow = 'rgba(238, 209, 43, 1)';
   var frameOrange = 'rgba(244, 144, 84, 1)';
@@ -50,11 +51,11 @@ window.onload = function () {
   largePlanetGradient.addColorStop(0, white);
 
   // drawGrid --------------------------------------------------------------------------
-  // Use drawGrid(number of rows/pixel height of rows, number of columns/pixel width of columns, 'px') - 'px' is optional and should be used if you want to declare the pixel width at which the rows and columns are spaced using the previous arguments
 
   function drawGrid(rows, cols, units = 0) {
     // Default parameter value found here: http://es6-features.org/#DefaultParameterValues
-    // This allows the user to write the function without passing the last argument if they don't want to seperate the rows/columns by pixels
+    // This allows the user to write the function with a default value for the last argument if they don't want to seperate the rows/columns by pixels
+
 
     var rowY; // This variable tells the for loop where to draw the current row
     var colX; // This variable tells the for loop where to draw the current column
@@ -212,11 +213,11 @@ window.onload = function () {
     ctx.moveTo(x * (7.45 / 16), y * (5.825 / 8));
     ctx.lineTo(x * (7.75 / 16), y * (5.865 / 8));
     ctx.bezierCurveTo(x * (7.75 / 16), y * (5.9 / 8), x * (7.9 / 16), y * (5.95 / 8), x * 0.5, y * (5.95 / 8));
-    // .quadraticCurveTo() found here: https://www.w3schools.com/tags/canvas_beziercurveto.asp
+    // .bezierCurveTo() found here: https://www.w3schools.com/tags/canvas_beziercurveto.asp
     // This method was used because two anchor points seemed necessary to draw the curve
     ctx.bezierCurveTo(x * (8.1 / 16), y * (5.95 / 8), x * (8.25 / 16), y * (5.9 / 8), x * (8.25 / 16), y * (5.865 / 8));
     ctx.lineTo(x * (8.55 / 16), y * (5.825 / 8));
-    // ctx.closePath();
+    // ctx.closePath(); // This path is not closed to prevent an extra line being drawn by the stroke() method used below
     ctx.strokeStyle = 'rgba(244, 255, 248, 1)';
     ctx.stroke();
 
@@ -277,7 +278,7 @@ window.onload = function () {
     drawShip();
   };
 
-  // drawGrid(8, 16);
+  // drawGrid(8, 16); // The drawGrid function was used for as a reference for getting value estimates for co-ordinates
 
   drawCanvas();
 

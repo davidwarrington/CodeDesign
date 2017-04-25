@@ -1,9 +1,8 @@
-.black-border {
+/*.black-border { // This class was used as so that I could easily see the border of the canvas
   border: 1px solid black;
-  background: black;
-}
+}*/
 
-/*.canvas-bg {
+/*.canvas-bg { // This was used as a reference whilst creating the canvas image
   background: url('../images/farstar.jpg');
   background-size: cover;
 }*/
