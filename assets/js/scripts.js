@@ -298,38 +298,54 @@ window.onload = function () {
       "animate": true
     }
 
-    var line = {
-      "xOrigin": scene.width / 2,
-      "yOrigin": scene.height / 2,
-      "xFinish": scene.width / 2,
-      "yFinish": scene.height,
-      "xVelocity": 0,
-      "yVelocity": 0,
-      "angle": 0,
-      "speed": 1
+    var scanner = {
+      "rings": 4,
+      "scanLine": {
+        "xOrigin": scene.width / 2,
+        "yOrigin": scene.height / 2,
+        "xFinish": scene.width / 2,
+        "yFinish": scene.height,
+        "xVelocity": 0,
+        "yVelocity": 0,
+        "angle": 0,
+        "speed": 1
+      },
+      "plane": {
+        "xCentre": scene.width * (1 / 6),
+        "yCentre": scene.height * (1 / 3),
+        "fill": '#990000',
+      }
     }
 
     var outerCircle = {
-      "centreX": scene.width / 2,
-      "centreY": scene.height / 2,
+      "xOrigin": scene.width / 2,
+      "yOrigin": scene.height / 2,
       "radius": (scene.height / 2) - 20
     }
 
     function drawScanLine () {
       ctx.beginPath();
-      ctx.moveTo(line.xOrigin, line.yOrigin);
-      ctx.lineTo(line.xFinish, line.yFinish);
-
+      ctx.moveTo(scanner.scanLine.xOrigin, scanner.scanLine.yOrigin);
+      ctx.lineTo(scanner.scanLine.xFinish, scanner.scanLine.yFinish);
       ctx.closePath();
       ctx.lineWidth = 3;
+      ctx.strokeStyle = '#999900';
       ctx.stroke();
+
+      // ctx.beginPath();
+      // ctx.moveTo(scanner.scanLine.xOrigin, scanner.scanLine.yOrigin);
+      // ctx.lineTo(scanner.scanLine.xFinish, scanner.scanLine.yFinish);
+      // ctx.closePath();
+      // ctx.lineWidth = 3;
+      // ctx.strokeStyle = 'white';
+      // ctx.stroke();
     }
 
     function drawCircle (centreX, centreY, radius, fill) {
       ctx.beginPath();
       ctx.arc(centreX, centreY, radius, 0, 2 * Math.PI);
       ctx.closePath();
-      if (fill) {
+      if (fill) { // This if statement will fill the circle if a fill colour is defined, otherwise it will give the circle a stroke
         ctx.fillStyle = fill;
         ctx.fill();
       } else {
@@ -337,25 +353,31 @@ window.onload = function () {
       }
     }
 
+    function drawScannerRings (numberOfRings) { // This
+      for (var i = 0; i <= numberOfRings; i++) {
+        drawCircle(outerCircle.xOrigin, outerCircle.yOrigin, outerCircle.radius * (i / numberOfRings));
+      }
+    }
+
     function animate() {
       if (scene.animate) {
-          ctx.clearRect(0, 0, scene.width, scene.height);
-          ctx.fillStyle = '#005500';
+          // ctx.clearRect(0, 0, scene.width, scene.height);
+          ctx.fillStyle = 'rgba(0, 85, 0, 0.3)';
+          // This colour is set to have an alpha value of 0.3 in order to make the rotating line appear to trail behind as it moves
+          // This technique was found here: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Advanced_animations#Trailing_effect
           ctx.fillRect(0, 0, scene.width, scene.height);
           ctx.strokeStyle = '#999900';
           ctx.save();
-          drawCircle(scene.width / 2, scene.height / 2, (scene.height / 2) - 180);
-          drawCircle(scene.width / 2, scene.height / 2, (scene.height / 2) - 100);
-          drawCircle(outerCircle.centreX, outerCircle.centreY, outerCircle.radius);
-          // ctx.clip();
 
-          line.xFinish = outerCircle.centreX + (outerCircle.radius * Math.cos(line.angle));
-          line.yFinish = outerCircle.centreY + (outerCircle.radius * Math.sin(line.angle));
+          drawScannerRings(4);
+
+          scanner.scanLine.xFinish = outerCircle.xOrigin + (outerCircle.radius * Math.cos(scanner.scanLine.angle));
+          scanner.scanLine.yFinish = outerCircle.yOrigin + (outerCircle.radius * Math.sin(scanner.scanLine.angle));
           // The two lines above find the co-ordinates for a point on the circumference of a circle using these equations:
           // x = a + rcos(t) <= where a is the x co-ordinate of the centre of the circle, r is the radius and t is the angle
           // y = b + rsin(t) <= where b is the y co-ordinate of the centre of the circle, r is the radius and t is the angle
 
-          line.angle += (line.speed * Math.PI / 180); // This increases the angle of the line by 1 degree each time
+          scanner.scanLine.angle += (scanner.scanLine.speed * Math.PI / 180); // This increases the angle of the line by 1 degree each time
 
           drawScanLine();
 
