@@ -331,14 +331,6 @@ window.onload = function () {
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#999900';
       ctx.stroke();
-
-      // ctx.beginPath();
-      // ctx.moveTo(scanner.scanLine.xOrigin, scanner.scanLine.yOrigin);
-      // ctx.lineTo(scanner.scanLine.xFinish, scanner.scanLine.yFinish);
-      // ctx.closePath();
-      // ctx.lineWidth = 3;
-      // ctx.strokeStyle = 'white';
-      // ctx.stroke();
     }
 
     function drawCircle (centreX, centreY, radius, fill) {
