@@ -350,16 +350,13 @@ window.onload = function () {
         "bottomWhite": 'rgba(244, 255, 248, 1)'
       },
       "draw": function () {
-        drawShip(ctx, this.xCentre, this.yCentre, this.xRadius, this.yRadius, this.colour);
+        drawShip(ctx, Math.round(this.xCentre), this.yCentre, this.xRadius, this.yRadius, this.colour);
       }
     };
 
     // Fill Background ---------------------------------------------------------
     ctx.fillStyle = scene.colour.black;
     ctx.fillRect(0, 0, scene.width, scene.height);
-
-    // NOTE Could .transform() be used here for the scaling of the image?
-
     // Draw Frame --------------------------------------------------------------
     frame.draw();
     ctx.clip(); // The clip method makes the previously drawn path act as a clipping mask, preventing any new paths from appear outside of this clipping mask
@@ -382,11 +379,7 @@ window.onload = function () {
   // ===========================================================================
   // Function for drawing everything on the animated canvas
   // ===========================================================================
-
-  // ===========================================================================
-  // Draw Animated Canvas
-  // ===========================================================================
-  function drawAnimatedCanvas(canvasId) {
+    function drawAnimatedCanvas(canvasId) {
     var canvas = document.getElementById(canvasId);
     var ctx = canvas.getContext('2d');
 
@@ -404,8 +397,8 @@ window.onload = function () {
       "width": canvas.width,
       "height": canvas.height,
       "colour": {
-        "bg": 'rgba(230, 230, 230, 1)', // TODO Change colour names
-        "background": 'rgba(0, 85, 0, 1)',
+        "background": 'rgba(230, 230, 230, 1)',
+        "screen": 'rgba(0, 85, 0, 1)',
         "overlay": 'rgba(200, 200, 0, 0.1)',
         "transparent": 'rgba(0, 0, 0, 0)',
         "hud": 'rgba(190, 190, 0, 1)',
@@ -437,7 +430,7 @@ window.onload = function () {
         ctx.save();
         ctx.beginPath();
         ctx.rect(this.xCentre - this.radius, this.yCentre - this.radius, this.radius * 2, this.radius * 2);
-        ctx.fillStyle = scene.colour.background;
+        ctx.fillStyle = scene.colour.screen;
         ctx.fill();
         // ctx.fillRect(this.xCentre - this.radius, this.yCentre - this.radius, this.radius * 2, this.radius * 2);
         ctx.clip(); // This clips all of the following paths inside over the previously drawn path
@@ -475,6 +468,7 @@ window.onload = function () {
       "xCentre": scene.width * 0.8,
       "yCentre": scene.height * 0.65,
       "radius": scene.width * 0.15,
+      "colour": scene.colour.screen,
       "overlayOffset": 0,
       "generateOverlays": function (top, height, width, rows, colour) {
         var rowHeight = height / rows;
@@ -495,7 +489,7 @@ window.onload = function () {
         ctx.save();
         ctx.beginPath();
         ctx.rect(this.xCentre - this.radius, this.yCentre - this.radius, this.radius * 2, this.radius * 2);
-        ctx.fillStyle = scene.colour.background;
+        ctx.fillStyle = this.colour;
         ctx.fill();
         ctx.clip();
         // ctx.fillRect(this.xCentre - this.radius, this.yCentre - this.radius, this.radius * 2, this.radius * 2);
@@ -547,29 +541,29 @@ window.onload = function () {
         "speed": -0.3,
         "offset": 0,
         "draw": function () {
-          var distanceFromBegin = getDistance(scannerScreen.xCentre, scannerScreen.yCentre, scannerScreen.xCentre + scannerScreen.blip.offset, scannerScreen.yCentre - scannerScreen.radius * 0.65);
-          var distanceFromEnd = getDistance(scannerScreen.line.xFinish, scannerScreen.line.yFinish, scannerScreen.xCentre + scannerScreen.blip.offset, scannerScreen.yCentre - scannerScreen.radius * 0.65);
+          var distanceFromBegin = getDistance(scannerScreen.xCentre, scannerScreen.yCentre, scannerScreen.xCentre + this.offset, scannerScreen.yCentre - scannerScreen.radius * 0.65);
+          var distanceFromEnd = getDistance(scannerScreen.line.xFinish, scannerScreen.line.yFinish, scannerScreen.xCentre + this.offset, scannerScreen.yCentre - scannerScreen.radius * 0.65);
           var lineLength = getDistance(scannerScreen.xCentre, scannerScreen.yCentre, scannerScreen.line.xFinish, scannerScreen.line.yFinish);
 
           if (distanceFromEnd + distanceFromBegin >= lineLength && distanceFromEnd + distanceFromBegin <= lineLength + 2) {
             // If the distance between the centre of the screen and the blip plus the distance between the blip and the end of the scanline is equal to the length of the line, the blip must lie onm the line
             // The second condition allows the if statement to account for the line not being drawn over the exact co-ordinates that the blip exists on
-            scannerScreen.blip.visible = true;
-            this.xCaptured = scannerScreen.xCentre + scannerScreen.blip.offset;
+            this.visible = true;
+            this.xCaptured = scannerScreen.xCentre + this.offset;
             this.yCaptured = scannerScreen.yCentre - scannerScreen.radius * 0.65;
           }
 
-          if (scannerScreen.blip.visible == true) { // If the blip is visible, draw it and count down
-            scannerScreen.blip.countdown --;
+          if (this.visible == true) { // If the blip is visible, draw it and count down
+            this.countdown --;
             drawCircle(ctx, this.xCaptured, this.yCaptured, scannerScreen.radius * 0.08, this.colour);
           }
 
-          if (scannerScreen.blip.countdown === 0) {
-            scannerScreen.blip.countdown = 120;
-            scannerScreen.blip.visible = false;
+          if (this.countdown === 0) {
+            this.countdown = 120;
+            this.visible = false;
           }
 
-          scannerScreen.blip.offset += scannerScreen.blip.speed;
+          this.offset += this.speed;
         }
       }
     };
