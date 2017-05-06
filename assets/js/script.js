@@ -397,11 +397,12 @@ window.onload = function () {
       "width": canvas.width,
       "height": canvas.height,
       "colour": {
-        "background": 'rgba(230, 230, 230, 1)',
+        "background": 'rgba(105, 105, 105, 1)',
         "screen": 'rgba(0, 85, 0, 1)',
         "overlay": 'rgba(200, 200, 0, 0.1)',
         "transparent": 'rgba(0, 0, 0, 0)',
         "hud": 'rgba(190, 190, 0, 1)',
+        "shadow": 'rgba(0, 0, 0, 0.5)'
       }
     };
 
@@ -409,6 +410,23 @@ window.onload = function () {
       "xCentre": scene.width * 0.3,
       "yCentre": scene.height * 0.5,
       "radius": scene.width * 0.25,
+      "shadow": function () {
+        for (var i = 1; i <= 2; i++) {
+          if (i === 1) {
+            var shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
+            shadow.addColorStop(0.4, scene.colour.transparent);
+            shadow.addColorStop(0.95, scene.colour.transparent);
+          } else if (i === 2) {
+            var shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
+            shadow.addColorStop(0.1, scene.colour.transparent);
+            shadow.addColorStop(0.9, scene.colour.transparent);
+          }
+          shadow.addColorStop(0, scene.colour.shadow);
+          shadow.addColorStop(1, scene.colour.shadow);
+          ctx.fillStyle = shadow;
+          ctx.fillRect(this.xCentre - this.radius, this.yCentre - this.radius, this.xCentre + this.radius, this.yCentre + this.radius);
+        }
+      },
       "overlayOffset": 0,
       "generateOverlays": function (top, height, width, rows, colour) {
         var rowHeight = height / rows;
@@ -449,6 +467,7 @@ window.onload = function () {
 
         // Draw interference ---------------------------------------------------
         targetScreen.generateOverlays(this.yCentre - this.radius, this.radius * 2, this.radius * 2, 6, scene.colour.overlay);
+        this.shadow();
         ctx.restore(); // This .restore() is being used to remove the clipping mask applied by the rectangular path used to create the screen
       },
     };
@@ -469,6 +488,23 @@ window.onload = function () {
       "yCentre": scene.height * 0.65,
       "radius": scene.width * 0.15,
       "colour": scene.colour.screen,
+      "shadow": function () {
+        for (var i = 1; i <= 2; i++) {
+          if (i === 1) {
+            var shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
+            shadow.addColorStop(0.4, scene.colour.transparent);
+            shadow.addColorStop(0.95, scene.colour.transparent);
+          } else if (i === 2) {
+            var shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
+            shadow.addColorStop(0.1, scene.colour.transparent);
+            shadow.addColorStop(0.9, scene.colour.transparent);
+          }
+          shadow.addColorStop(0, scene.colour.shadow);
+          shadow.addColorStop(1, scene.colour.shadow);
+          ctx.fillStyle = shadow;
+          ctx.fillRect(this.xCentre - this.radius, this.yCentre - this.radius, this.xCentre + this.radius, this.yCentre + this.radius);
+        }
+      },
       "overlayOffset": 0,
       "generateOverlays": function (top, height, width, rows, colour) {
         var rowHeight = height / rows;
@@ -497,6 +533,7 @@ window.onload = function () {
         this.line.draw();
         this.blip.draw();
         this.generateOverlays(scannerScreen.yCentre - scannerScreen.radius, scannerScreen.radius * 2, scannerScreen.radius * 2, 6, scene.colour.overlay);
+        this.shadow();
         ctx.restore();
       },
       "rings": {
@@ -653,7 +690,7 @@ window.onload = function () {
       "radius": scene.width * 0.08,
       "text": 'EJECT',
       "colour": {
-        "button": 'rgba(180, 0, 0, 1)',
+        "button": 'rgba(118, 21, 21, 1)',
         "text": 'rgba(255, 255, 255, 1)'
       },
       "draw": function () {
@@ -667,7 +704,7 @@ window.onload = function () {
 
     function animate () {
       // Draw general parts ----------------------------------------------------
-      ctx.fillStyle = scene.colour.bg;
+      ctx.fillStyle = scene.colour.background;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Draw targetting screen ------------------------------------------------
