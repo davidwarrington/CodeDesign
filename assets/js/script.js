@@ -54,123 +54,124 @@ window.onload = function () {
   // ===========================================================================
   // Draw ship
   // ===========================================================================
+  function drawTopHalf (ctx, xCentre, yCentre, xRadius, yRadius, colour) {
+    ctx.fillStyle = colour;
+    ctx.beginPath();
+    ctx.moveTo(xCentre, yCentre - yRadius * 0.8); // Top centre
+    ctx.lineTo(xCentre - xRadius * 0.18, yCentre - yRadius * 0.7);
+      // Fin
+      ctx.lineTo(xCentre - xRadius * 0.21, yCentre - yRadius * 1.25);
+      ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
+      ctx.lineTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.65);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.27, yCentre - yRadius * 0.66, xCentre - xRadius * 0.34, yCentre * 0.97);
+    // .quadraticCurveTo() method found here: https://www.w3schools.com/tags/canvas_quadraticcurveto.asp
+    // .quadraticCurveTo() was used to to it's ease of use compared to .bezierCurveTo() and the lack of need for an extra control point for the curve
+    // Wing
+    ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
+    ctx.lineTo(xCentre - xRadius * 0.275, yCentre - yRadius * 0.1);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.16, yCentre - yRadius * 0.6, xCentre - xRadius * 0.08, yCentre - yRadius * 0.25);
+    ctx.lineTo(xCentre, yCentre - yRadius * 0.25);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawBottomHalf (ctx, xCentre, yCentre, xRadius, yRadius, colour) {
+    ctx.fillStyle = colour;
+    ctx.beginPath();
+    ctx.moveTo(xCentre, yCentre - yRadius * 0.6);
+    ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
+    ctx.lineTo(xCentre - xRadius * 0.51, yCentre + yRadius * 0.5);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.56, yCentre + yRadius * 0.7, xCentre - xRadius * 0.5, yCentre + yRadius * 0.75);
+    ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.275, yCentre + yRadius * 1, xCentre - xRadius * 0.23, yCentre + yRadius * 1.05);
+    ctx.lineTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.2);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.35, xCentre, yCentre + yRadius * 1.35);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawThrusters (ctx, xCentre, yCentre, xRadius, yRadius, colour) {
+    ctx.fillStyle = colour;
+    ctx.beginPath();
+    ctx.moveTo(xCentre - xRadius * 0.08, yCentre + yRadius * 0.5);
+    ctx.lineTo(xCentre - xRadius * 0.2, yCentre + yRadius * 0.46);
+    ctx.lineTo(xCentre - xRadius * 0.21, yCentre + yRadius * 0.83);
+    ctx.lineTo(xCentre - xRadius * 0.09, yCentre + yRadius * 0.89);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawHighlights (ctx, xCentre, yCentre, xRadius, yRadius, colour) {
+    ctx.beginPath();
+    ctx.moveTo(xCentre, yCentre + yRadius * 1.2);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.08, yCentre + yRadius * 1.2, xCentre - xRadius * 0.09, yCentre + yRadius);
+    ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = colour.bottomWhite;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(xCentre - xRadius * 0.53, yCentre + yRadius * 0.6);
+    ctx.lineTo(xCentre - xRadius * 0.28, yCentre - yRadius * 0.15);
+    ctx.lineTo(xCentre - xRadius * 0.35, yCentre - yRadius * 0.15);
+    ctx.fillStyle = colour.topWhite;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.45);
+    ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
+    ctx.lineTo(xCentre - xRadius * 0.2, yCentre - yRadius * 0.6);
+    ctx.fillStyle = colour.nearBlack;
+    ctx.fill();
+  }
+
+  // =======================================================================
+  // Draw ship outline
+  // =======================================================================
+  function drawOutline(ctx, xCentre, yCentre, xRadius, yRadius, colour) {
+            ctx.beginPath();
+    ctx.moveTo(xCentre, yCentre - yRadius * 0.8); // Top centre
+    ctx.lineTo(xCentre - xRadius * 0.18, yCentre - yRadius * 0.7);
+      // Fin
+      ctx.lineTo(xCentre - xRadius * 0.21, yCentre - yRadius * 1.25);
+      ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
+      ctx.lineTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.65);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.27, yCentre - yRadius * 0.66, xCentre - xRadius * 0.34, yCentre * 0.97);
+    // Wing
+    ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
+    ctx.lineTo(xCentre - xRadius * 0.51, yCentre + yRadius * 0.5);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.56, yCentre + yRadius * 0.7, xCentre - xRadius * 0.5, yCentre + yRadius * 0.75);
+    ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.275, yCentre + yRadius * 1, xCentre - xRadius * 0.23, yCentre + yRadius * 1.05);
+    ctx.lineTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.2);
+    ctx.quadraticCurveTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.35, xCentre, yCentre + yRadius * 1.35);
+
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = colour;
+    ctx.stroke();
+    ctx.closePath();
+  }
+
   function drawShip (ctx, xCentre, yCentre, xRadius, yRadius, colour, stroke) {
+    var i;
     if (!stroke) { // This if statement fills the ship if the 'stroke' argument has a 'falsy' value, otherwise it draws an outline of the ship
-      function drawTopHalf (xCentre, yCentre, xRadius, yRadius, colour) {
-        ctx.fillStyle = colour;
-        ctx.beginPath();
-        ctx.moveTo(xCentre, yCentre - yRadius * 0.8); // Top centre
-        ctx.lineTo(xCentre - xRadius * 0.18, yCentre - yRadius * 0.7);
-          // Fin
-          ctx.lineTo(xCentre - xRadius * 0.21, yCentre - yRadius * 1.25);
-          ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
-          ctx.lineTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.65);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.27, yCentre - yRadius * 0.66, xCentre - xRadius * 0.34, yCentre * 0.97);
-        // .quadraticCurveTo() method found here: https://www.w3schools.com/tags/canvas_quadraticcurveto.asp
-        // .quadraticCurveTo() was used to to it's ease of use compared to .bezierCurveTo() and the lack of need for an extra control point for the curve
-        // Wing
-        ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
-        ctx.lineTo(xCentre - xRadius * 0.275, yCentre - yRadius * 0.1);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.16, yCentre - yRadius * 0.6, xCentre - xRadius * 0.08, yCentre - yRadius * 0.25);
-        ctx.lineTo(xCentre, yCentre - yRadius * 0.25);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      function drawBottomHalf (xCentre, yCentre, xRadius, yRadius, colour) {
-        ctx.fillStyle = colour;
-        ctx.beginPath();
-        ctx.moveTo(xCentre, yCentre - yRadius * 0.6);
-        ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
-        ctx.lineTo(xCentre - xRadius * 0.51, yCentre + yRadius * 0.5);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.56, yCentre + yRadius * 0.7, xCentre - xRadius * 0.5, yCentre + yRadius * 0.75);
-        ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.275, yCentre + yRadius * 1, xCentre - xRadius * 0.23, yCentre + yRadius * 1.05);
-        ctx.lineTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.2);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.35, xCentre, yCentre + yRadius * 1.35);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      function drawThrusters (xCentre, yCentre, xRadius, yRadius, colour) {
-        ctx.fillStyle = colour;
-        ctx.beginPath();
-        ctx.moveTo(xCentre - xRadius * 0.08, yCentre + yRadius * 0.5);
-        ctx.lineTo(xCentre - xRadius * 0.2, yCentre + yRadius * 0.46);
-        ctx.lineTo(xCentre - xRadius * 0.21, yCentre + yRadius * 0.83);
-        ctx.lineTo(xCentre - xRadius * 0.09, yCentre + yRadius * 0.89);
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      function drawHighlights (xCentre, yCentre, xRadius, yRadius, colour) {
-        ctx.beginPath();
-        ctx.moveTo(xCentre, yCentre + yRadius * 1.2);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.08, yCentre + yRadius * 1.2, xCentre - xRadius * 0.09, yCentre + yRadius);
-        ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = colour.bottomWhite;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(xCentre - xRadius * 0.53, yCentre + yRadius * 0.6);
-        ctx.lineTo(xCentre - xRadius * 0.28, yCentre - yRadius * 0.15);
-        ctx.lineTo(xCentre - xRadius * 0.35, yCentre - yRadius * 0.15);
-        ctx.fillStyle = colour.topWhite;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.45);
-        ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
-        ctx.lineTo(xCentre - xRadius * 0.2, yCentre - yRadius * 0.6);
-        ctx.fillStyle = colour.nearBlack;
-        ctx.fill();
-      }
-
-      for (var i = 0; i <= 1; i++) {
+      for (i = 0; i <= 1; i++) {
         if (i === 1) {
           xRadius *= -1;
           // This changes makes xRadius have an equal but opposite value to that which it previously had
           // Flipping the xRadius value flips the portion of the ship being draw
         }
-        drawBottomHalf(xCentre, yCentre, xRadius, yRadius, colour.nearBlack);
-        drawTopHalf(xCentre, yCentre, xRadius, yRadius, colour.topWhite);
-        drawThrusters(xCentre, yCentre, xRadius, yRadius, colour.bottomWhite);
-        drawHighlights(xCentre, yCentre, xRadius, yRadius, colour);
+        drawBottomHalf(ctx, xCentre, yCentre, xRadius, yRadius, colour.nearBlack);
+        drawTopHalf(ctx, xCentre, yCentre, xRadius, yRadius, colour.topWhite);
+        drawThrusters(ctx, xCentre, yCentre, xRadius, yRadius, colour.bottomWhite);
+        drawHighlights(ctx, xCentre, yCentre, xRadius, yRadius, colour);
       }
     } else {
-      // =======================================================================
-      // Draw ship outline
-      // =======================================================================
-      function drawOutline(xCentre, yCentre, xRadius, yRadius, colour) {
-                ctx.beginPath();
-        ctx.moveTo(xCentre, yCentre - yRadius * 0.8); // Top centre
-        ctx.lineTo(xCentre - xRadius * 0.18, yCentre - yRadius * 0.7);
-          // Fin
-          ctx.lineTo(xCentre - xRadius * 0.21, yCentre - yRadius * 1.25);
-          ctx.lineTo(xCentre - xRadius * 0.25, yCentre - yRadius * 1.23);
-          ctx.lineTo(xCentre - xRadius * 0.23, yCentre - yRadius * 0.65);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.27, yCentre - yRadius * 0.66, xCentre - xRadius * 0.34, yCentre * 0.97);
-        // Wing
-        ctx.lineTo(xCentre - xRadius, yCentre + yRadius * 0.3);
-        ctx.lineTo(xCentre - xRadius * 0.51, yCentre + yRadius * 0.5);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.56, yCentre + yRadius * 0.7, xCentre - xRadius * 0.5, yCentre + yRadius * 0.75);
-        ctx.lineTo(xCentre - xRadius * 0.23, yCentre + yRadius * 0.85);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.275, yCentre + yRadius * 1, xCentre - xRadius * 0.23, yCentre + yRadius * 1.05);
-        ctx.lineTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.2);
-        ctx.quadraticCurveTo(xCentre - xRadius * 0.1, yCentre + yRadius * 1.35, xCentre, yCentre + yRadius * 1.35);
-
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = colour;
-        ctx.stroke();
-        ctx.closePath();
-      }
-
-      for (var i = 0; i <= 1; i++) {
+      for (i = 0; i <= 1; i++) {
         if (i === 1) {
           xRadius *= -1;
         }
-        drawOutline(xCentre, yCentre, xRadius, yRadius, colour);
+        drawOutline(ctx, xCentre, yCentre, xRadius, yRadius, colour);
       }
     }
   }
@@ -195,7 +196,7 @@ window.onload = function () {
     var rowStart;
 
     // Draw horizontal lines ---------------------------------------------------
-    for (var i = 1; i <= rows + 1; i++) {
+    for (i = 1; i <= rows + 1; i++) {
       rowStart = yStart + ((i - 1) * rowHeight);
       ctx.beginPath();
       ctx.moveTo(xStart, rowStart);
@@ -412,12 +413,13 @@ window.onload = function () {
       "radius": scene.width * 0.25,
       "shadow": function () {
         for (var i = 1; i <= 2; i++) {
+          var shadow;
           if (i === 1) {
-            var shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
+            shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
             shadow.addColorStop(0.4, scene.colour.transparent);
             shadow.addColorStop(0.95, scene.colour.transparent);
           } else if (i === 2) {
-            var shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
+            shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
             shadow.addColorStop(0.1, scene.colour.transparent);
             shadow.addColorStop(0.9, scene.colour.transparent);
           }
@@ -431,7 +433,7 @@ window.onload = function () {
       "generateOverlays": function (top, height, width, rows, colour) {
         var rowHeight = height / rows;
         ctx.fillStyle = colour;
-        for (i = 1; i <= rows + 2; i+= 2) {
+        for (var i = 1; i <= rows + 2; i+= 2) {
           var rowTop = ((i - 1) * rowHeight) + top + this.overlayOffset;
           if (i != rows) {
             ctx.fillRect(this.xCentre - this.radius, rowTop, width, rowHeight);
@@ -481,7 +483,7 @@ window.onload = function () {
       "draw": function () {
         drawGrid(ctx, this.xCentre - this.radius, this.yCentre - this.radius, this.radius * 2, this.radius * 2, this.columns, this.rows, scene.colour.hud);
       }
-    }
+    };
 
     var scannerScreen = {
       "xCentre": scene.width * 0.8,
@@ -490,12 +492,13 @@ window.onload = function () {
       "colour": scene.colour.screen,
       "shadow": function () {
         for (var i = 1; i <= 2; i++) {
+          var shadow;
           if (i === 1) {
-            var shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
+            shadow = ctx.createLinearGradient(this.xCentre, this.yCentre - this.radius, this.xCentre, this.yCentre + this.radius);
             shadow.addColorStop(0.4, scene.colour.transparent);
             shadow.addColorStop(0.95, scene.colour.transparent);
           } else if (i === 2) {
-            var shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
+            shadow = ctx.createLinearGradient(this.xCentre - this.radius, this.yCentre, this.xCentre + this.radius, this.yCentre);
             shadow.addColorStop(0.1, scene.colour.transparent);
             shadow.addColorStop(0.9, scene.colour.transparent);
           }
@@ -509,7 +512,7 @@ window.onload = function () {
       "generateOverlays": function (top, height, width, rows, colour) {
         var rowHeight = height / rows;
         ctx.fillStyle = colour;
-        for (i = 1; i <= rows + 2; i+= 2) {
+        for (var i = 1; i <= rows + 2; i+= 2) {
           var rowTop = ((i - 1) * rowHeight) + top + this.overlayOffset;
           if (i != rows) {
             ctx.fillRect(this.xCentre - this.radius, rowTop, width, rowHeight);
@@ -590,7 +593,7 @@ window.onload = function () {
             this.yCaptured = scannerScreen.yCentre - scannerScreen.radius * 0.65;
           }
 
-          if (this.visible == true) { // If the blip is visible, draw it and count down
+          if (this.visible === true) { // If the blip is visible, draw it and count down
             this.countdown --;
             drawCircle(ctx, this.xCaptured, this.yCaptured, scannerScreen.radius * 0.08, this.colour);
           }
@@ -633,11 +636,11 @@ window.onload = function () {
             this.maxAngle -= 2;
           }
 
-          if (this.maxAngle <= 0 && this.targetCountdown != 0) { // This if statement is used to
+          if (this.maxAngle <= 0 && this.targetCountdown !== 0) { // This if statement is used to
             this.targetCountdown --;
           }
 
-          if (this.targetCountdown == 0) {
+          if (this.targetCountdown === 0) {
             this.state = 'targeted';
             this.targetCountdown = 30;
           }
@@ -647,13 +650,13 @@ window.onload = function () {
           this.targetCountdown --;
           colour = scene.colour.transparent;
 
-          if (this.targetCountdown == 0 && this.flashCountdown != 0) { // This if statement is used to flash the ship
+          if (this.targetCountdown === 0 && this.flashCountdown !== 0) { // This if statement is used to flash the ship
             this.state = 'detected';
             this.targetCountdown = 30;
             this.flashCountdown --;
           }
 
-          if (this.flashCountdown == 0) { // If the ship has flashed 3 times add the text "Target Acquired"
+          if (this.flashCountdown === 0) { // If the ship has flashed 3 times add the text "Target Acquired"
             colour = this.colour.targeted;
 
             ctx.font = '20px "Press Start 2P", Arial';
@@ -666,7 +669,6 @@ window.onload = function () {
 
         drawShip(ctx, this.xCentre, this.yCentre, this.xRadius, this.yRadius, colour, 'stroke');
 
-        var maxAngleRadians = this.maxAngle * Math.PI / 180;
         this.angle += this.speed * Math.PI / 180;
 
         if (this.angle >= this.maxAngle || this.angle <= -this.maxAngle) {
@@ -682,7 +684,7 @@ window.onload = function () {
           }
         }
       }
-    }
+    };
 
     var button = {
       "xCentre": scene.width * 0.8,
@@ -700,7 +702,7 @@ window.onload = function () {
         ctx.fillStyle = this.colour.text;
         ctx.fillText(this.text, this.xCentre, this.yCentre + 10);
       }
-    }
+    };
 
     function animate () {
       // Draw general parts ----------------------------------------------------
