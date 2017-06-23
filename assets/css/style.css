@@ -14,3 +14,14 @@ body {
 canvas {
   float: left;
 }
+
+.row {
+	width: 100%;
+	background: black;
+	display: flex;
+	justify-content: center;
+}
+
+#animatedRow {
+	background: rgba(105, 105, 105, 1);
+}
