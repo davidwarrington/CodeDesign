@@ -323,12 +323,26 @@ window.onload = function () {
         "white": scene.colour.white
       },
       "createGradients": function () {
-        this.small.gradient = ctx.createRadialGradient(this.small.xCentre * 1.1, this.small.yCentre * 1.25, this.small.radius * 0.45, this.small.xCentre * 0.95, this.small.yCentre * 0.95, this.small.radius * 1.5);
+        this.small.gradient = ctx.createRadialGradient(
+          this.small.xCentre * 1.1,
+          this.small.yCentre * 1.25,
+          this.small.radius * 0.45,
+          this.small.xCentre * 0.95,
+          this.small.yCentre * 0.95,
+          this.small.radius * 1.5
+        );
         this.small.gradient.addColorStop(0.55, this.colour.deepBlue);
         this.small.gradient.addColorStop(0.60, this.colour.lightBlue);
         this.small.gradient.addColorStop(0.68, this.colour.white);
 
-        this.large.gradient = ctx.createRadialGradient(this.large.xCentre * 1.2, this.large.yCentre * 1.35, this.large.radius * 0.55, this.large.xCentre * 0.95, this.large.yCentre * 0.95, this.large.radius * 1.5);
+        this.large.gradient = ctx.createRadialGradient(
+          this.large.xCentre * 1.2,
+          this.large.yCentre * 1.35,
+          this.large.radius * 0.55,
+          this.large.xCentre * 0.95,
+          this.large.yCentre * 0.95,
+          this.large.radius * 1.5
+        );
         this.large.gradient.addColorStop(0.55, this.colour.deepBlue);
         this.large.gradient.addColorStop(0.60, this.colour.lightBlue);
         this.large.gradient.addColorStop(0.68, this.colour.white);
